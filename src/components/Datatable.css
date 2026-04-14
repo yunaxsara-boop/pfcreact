@@ -1,0 +1,129 @@
+/* ===== CONTAINER (ISOLÉ) ===== */
+.dt-container {
+  width: 95%;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+}
+
+/* ===== HEADER ===== */
+.dt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.dt-title {
+  color: #333;
+}
+
+/* ===== BUTTONS (UNIQUES) ===== */
+.dt-btn {
+  margin-left: 8px;
+  padding: 7px 12px;
+  border: none;
+  border-radius: 6px;
+  background: #ff7a18;
+  color: white;
+  cursor: pointer;
+}
+
+.dt-btn:hover {
+  background: #e86a10;
+}
+
+/* ICON BUTTONS */
+.dt-btn-icon {
+  margin: 2px;
+  padding: 5px 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: #eee;
+}
+
+.dt-btn-icon:hover {
+  background: #ddd;
+}
+
+/* ===== SEARCH ===== */
+.dt-search {
+  width: 280px;   /* 👈 plus petit */
+  padding: 6px 10px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 13px;
+}
+
+/* ===== TABLE ===== */
+.dt-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.dt-table th {
+  background: #ff7a18;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dt-table td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.dt-table tr:hover {
+  background: #f9f9f9;
+}
+
+/* ACTION CELL */
+.dt-actions-cell {
+  text-align: center;
+}
+
+/* ===== PAGINATION (PRÊT SI TU AJOUTES PLUS TARD) ===== */
+.dt-pagination {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.dt-pagination button {
+  padding: 6px 10px;
+  border: none;
+  background: #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dt-pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+/* special datatble2 */
+.dt-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.dt-left {
+  width: 30%;
+  min-height: 100vh;
+}
+
+.dt-right {
+  width: 70%;
+}
+
+.user-form {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}

@@ -1,0 +1,63 @@
+.user-form {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.40);
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  position: sticky;
+  top: 20px;
+}
+
+.user-form h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* inputs + select */
+.user-form input,
+.user-form select {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s;
+}
+
+/* focus effet */
+.user-form input:focus,
+.user-form select:focus {
+  border-color: #6a8042;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
+}
+
+/* button */
+.user-form button {
+  padding: 10px;
+  background: #6a8042;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* hover button */
+.user-form button:hover {
+  background: #43a047;
+  transform: translateY(-1px);
+}
+
+/* responsive */
+@media (max-width: 900px) {
+  .user-form {
+    position: static;
+  }
+}

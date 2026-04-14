@@ -12,7 +12,6 @@ import AdminUsers from "./pages/admin/Users";
 
 /* ========= AGENT ========= */
 import AgentDashboard from "./pages/agent/Dashboard";
-import AgentBrevets from "./pages/agent/Brevets";
 import AgentDemandes from "./pages/agent/Demandes";
 import AgentPaiements from "./pages/agent/Paiements";
 import AgentRecours from "./pages/agent/Recours";
@@ -20,7 +19,6 @@ import AgentDocuments from "./pages/agent/Documents";
 
 /* ========= RESPONSABLE ========= */
 import RespDashboard from "./pages/responsable/Dashboard";
-import RespBrevets from "./pages/responsable/Brevets";
 import RespDemandes from "./pages/responsable/Demandes";
 import RespPaiements from "./pages/responsable/Paiements";
 import RespRecours from "./pages/responsable/Recours";
@@ -28,11 +26,16 @@ import RespDocuments from "./pages/responsable/Documents";
 
 /* ========= DIRECTEUR ========= */
 import DirDashboard from "./pages/directeur/Dashboard";
-import DirBrevets from "./pages/directeur/Brevets";
 import DirDemandes from "./pages/directeur/Demandes";
 import DirPaiements from "./pages/directeur/Paiements";
 import DirDocuments from "./pages/directeur/Documents";
 import DirRecours from "./pages/directeur/Recours";
+
+/* ========= BREVETS (NOUVELLE STRUCTURE) ========= */
+import Brevets from "./pages/agent/Brevets";
+import AddBrevet from "./pages/agent/AddBrevet";
+import EditBrevet from "./pages/agent/EditBrevet";
+import ViewBrevet from "./pages/agent/ViewBrevet";
 
 /* ========= ROLE HOME ========= */
 const ROLE_HOME = {
@@ -44,8 +47,12 @@ const ROLE_HOME = {
 
 function HomeRedirect() {
   const { user } = useAuth();
+
   if (!user) return <Navigate to="/login" replace />;
-  return <Navigate to={ROLE_HOME[user.role] || "/login"} replace />;
+
+  return (
+    <Navigate to={ROLE_HOME[user.role] || "/login"} replace />
+  );
 }
 
 export default function App() {
@@ -62,7 +69,14 @@ export default function App() {
 
       {/* ========= AGENT ========= */}
       <Route path="/agent" element={<ProtectedRoute roles={["agent"]}><Layout><AgentDashboard /></Layout></ProtectedRoute>} />
-      <Route path="/agent/brevets" element={<ProtectedRoute roles={["agent"]}><Layout><AgentBrevets /></Layout></ProtectedRoute>} />
+
+      {/* 🔥 BREVETS NEW SYSTEM */}
+      <Route path="/agent/brevets" element={<ProtectedRoute roles={["agent"]}><Layout><Brevets /></Layout></ProtectedRoute>} />
+      <Route path="/agent/brevets/add" element={<ProtectedRoute roles={["agent"]}><Layout><AddBrevet /></Layout></ProtectedRoute>} />
+      <Route path="/agent/brevets/edit/:id" element={<ProtectedRoute roles={["agent"]}><Layout><EditBrevet /></Layout></ProtectedRoute>} />
+      <Route path="/agent/brevets/view/:id" element={<ProtectedRoute roles={["agent"]}><Layout><ViewBrevet /></Layout></ProtectedRoute>} />
+
+      {/* autres modules agent */}
       <Route path="/agent/demandes" element={<ProtectedRoute roles={["agent"]}><Layout><AgentDemandes /></Layout></ProtectedRoute>} />
       <Route path="/agent/paiements" element={<ProtectedRoute roles={["agent"]}><Layout><AgentPaiements /></Layout></ProtectedRoute>} />
       <Route path="/agent/recours" element={<ProtectedRoute roles={["agent"]}><Layout><AgentRecours /></Layout></ProtectedRoute>} />
@@ -70,7 +84,6 @@ export default function App() {
 
       {/* ========= RESPONSABLE ========= */}
       <Route path="/responsable" element={<ProtectedRoute roles={["responsable"]}><Layout><RespDashboard /></Layout></ProtectedRoute>} />
-      <Route path="/responsable/brevets" element={<ProtectedRoute roles={["responsable"]}><Layout><RespBrevets /></Layout></ProtectedRoute>} />
       <Route path="/responsable/demandes" element={<ProtectedRoute roles={["responsable"]}><Layout><RespDemandes /></Layout></ProtectedRoute>} />
       <Route path="/responsable/paiements" element={<ProtectedRoute roles={["responsable"]}><Layout><RespPaiements /></Layout></ProtectedRoute>} />
       <Route path="/responsable/recours" element={<ProtectedRoute roles={["responsable"]}><Layout><RespRecours /></Layout></ProtectedRoute>} />
@@ -78,7 +91,6 @@ export default function App() {
 
       {/* ========= DIRECTEUR ========= */}
       <Route path="/directeur" element={<ProtectedRoute roles={["directeur"]}><Layout><DirDashboard /></Layout></ProtectedRoute>} />
-      <Route path="/directeur/brevets" element={<ProtectedRoute roles={["directeur"]}><Layout><DirBrevets /></Layout></ProtectedRoute>} />
       <Route path="/directeur/demandes" element={<ProtectedRoute roles={["directeur"]}><Layout><DirDemandes /></Layout></ProtectedRoute>} />
       <Route path="/directeur/paiements" element={<ProtectedRoute roles={["directeur"]}><Layout><DirPaiements /></Layout></ProtectedRoute>} />
       <Route path="/directeur/documents" element={<ProtectedRoute roles={["directeur"]}><Layout><DirDocuments /></Layout></ProtectedRoute>} />
