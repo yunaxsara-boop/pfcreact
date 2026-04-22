@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "./editBrevet.css"
+import "./editBrevet.css";
 import { getBrevetById, updateBrevet } from "../../features/brevets/brevetStorage";
 
 export default function EditBrevet() {
   const { id } = useParams();
   const navigate = useNavigate();
-
   const [form, setForm] = useState(null);
 
   useEffect(() => {
@@ -14,81 +13,111 @@ export default function EditBrevet() {
     setForm(data);
   }, [id]);
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
-  };
 
   const handleFile = (e) => {
-    const files = Array.from(e.target.files).map(f => f.name);
+    const files = Array.from(e.target.files).map((f) => f.name);
     setForm({ ...form, documents: [...(form.documents || []), ...files] });
   };
 
-  if (!form) return <p>Loading...</p>;
+  if (!form) return <p>Chargement…</p>;
 
   return (
-    <div className="edit-container">
+    <div className="brevet-page">
+      <div className="brevet-card">
+        <h2 className="brevet-title">Modifier le brevet</h2>
 
-  <h2 className="edit-title">✏️ Modifier Brevet</h2>
+        <div className="brevet-grid">
 
-  <div className="edit-form">
+          {/* ── Identification ── */}
+          <div className="brevet-section-label">Identification</div>
 
-    <label>Num brevet</label>
-    <input name="num_brevet" value={form.num_brevet} onChange={handleChange} />
+          <div className="form-group">
+            <label>Numéro brevet</label>
+            <input name="num_brevet" value={form.num_brevet} onChange={handleChange} />
+          </div>
 
-    <label>Titre</label>
-    <input name="titre" value={form.titre} onChange={handleChange} />
+          <div className="form-group">
+            <label>Titre de l'invention</label>
+            <input name="titre" value={form.titre} onChange={handleChange} />
+          </div>
 
-    <label>Num dépôt</label>
-    <input name="num_depo" value={form.num_depo} onChange={handleChange} />
+          <div className="form-group">
+            <label>Numéro de dépôt</label>
+            <input name="num_depo" value={form.num_depo} onChange={handleChange} />
+          </div>
 
-    <label>Date dépôt</label>
-    <input type="date" name="date_depo" value={form.date_depo} onChange={handleChange} />
+          <div className="form-group">
+            <label>Titulaire</label>
+            <input name="titulaire" value={form.titulaire} onChange={handleChange} />
+          </div>
 
-    <label>Date sortie</label>
-    <input type="date" name="date_sortie" value={form.date_sortie} onChange={handleChange} />
+          {/* ── Dates ── */}
+          <div className="brevet-section-label">Dates</div>
 
-    <label>Titulaire</label>
-    <input name="titulaire" value={form.titulaire} onChange={handleChange} />
+          <div className="form-group">
+            <label>Date de dépôt</label>
+            <input type="date" name="date_depo" value={form.date_depo} onChange={handleChange} />
+          </div>
 
-    <label>Inventeur</label>
-    <input name="nom_inventeur" value={form.nom_inventeur} onChange={handleChange} />
+          <div className="form-group">
+            <label>Date de sortie</label>
+            <input type="date" name="date_sortie" value={form.date_sortie} onChange={handleChange} />
+          </div>
 
-    <label>Déposant</label>
-    <input name="nom_deposant" value={form.nom_deposant} onChange={handleChange} />
+          {/* ── Personnes ── */}
+          <div className="brevet-section-label">Personnes</div>
 
-    <label>Status</label>
-    <select name="status" value={form.status} onChange={handleChange}>
-      <option value="EN_ATTENTE">EN_ATTENTE</option>
-      <option value="ACCEPTER">ACCEPTER</option>
-      <option value="REFUSER">REFUSER</option>
-    </select>
+          <div className="form-group">
+            <label>Inventeur</label>
+            <input name="nom_inventeur" value={form.nom_inventeur} onChange={handleChange} />
+          </div>
 
-    <label>Ajouter documents</label>
-    <input type="file" multiple onChange={handleFile} />
+          <div className="form-group">
+            <label>Déposant</label>
+            <input name="nom_deposant" value={form.nom_deposant} onChange={handleChange} />
+          </div>
 
-    <ul className="edit-docs">
-      {form.documents?.map((doc, i) => (
-        <li key={i}>{doc}</li>
-      ))}
-    </ul>
+          {/* ── Statut ── */}
+          <div className="brevet-section-label">Statut &amp; Documents</div>
 
-    <div className="edit-actions">
-      <button
-        className="edit-save-btn"
-        onClick={() => {
-          updateBrevet(id, form);
-          navigate("/agent/brevets");
-        }}
-      >
-        💾 Enregistrer
-      </button>
+          <div className="form-group">
+            <label>Statut</label>
+            <select name="status" value={form.status} onChange={handleChange}>
+              <option value="EN_ATTENTE">EN ATTENTE</option>
+              <option value="ACCEPTER">ACCEPTER</option>
+              <option value="REFUSER">REFUSER</option>
+            </select>
+          </div>
 
-      <button className="edit-cancel-btn" onClick={() => navigate("/agent/brevets")}>
-        Annuler
-      </button>
+          <div className="form-group full-width">
+            <label>Ajouter des documents</label>
+            <div className="docs-box">
+              <input type="file" multiple onChange={handleFile} />
+              {form.documents?.map((doc, i) => (
+                <div key={i} className="doc-item">{doc}</div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+        <div className="brevet-actions">
+          <button
+            className="btn-save"
+            onClick={() => {
+              updateBrevet(id, form);
+              navigate("/agent/brevets");
+            }}
+          >
+            Enregistrer les modifications
+          </button>
+          <button className="btn-cancel" onClick={() => navigate("/agent/brevets")}>
+            Annuler
+          </button>
+        </div>
+      </div>
     </div>
-
-  </div>
-</div>
   );
 }

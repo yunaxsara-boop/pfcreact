@@ -1,92 +1,167 @@
+/* ═══════════════════════════════════════════════════════════
+   VIEW BREVET  —  Sunset palette
+   ═══════════════════════════════════════════════════════════ */
 
-/* 🟠 VIEW BREVET - ORANGE MODERNE */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
 
+.view-page {
+  min-height: 100vh;
+  background: #f4f0ea;
+  padding: 32px 24px;
+  font-family: "DM Sans", "Segoe UI", sans-serif;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* ─── Card principale ────────────────────────────────────── */
 .view-container {
-  max-width: 900px;
-  margin: 30px auto;
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 14px;
-  font-family: "Segoe UI", sans-serif;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  border: 1px solid #f1f1f1;
+  width: 100%;
+  max-width: 860px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px 40px;
+  box-shadow:
+    0 4px 6px rgba(234,97,19,.05),
+    0 12px 32px rgba(0,0,0,.08);
+  border: 1px solid #f0e0cc;
 }
 
-/* TITLE */
+/* ─── Title ──────────────────────────────────────────────── */
 .view-title {
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 700;
-  color: #1f2937;
-  border-left: 5px solid #ff7a18;
-  padding-left: 12px;
-  margin-bottom: 20px;
+  color: #1a1a2e;
+  margin: 0 0 24px;
+  padding-left: 14px;
+  border-left: 4px solid;
+  border-image: linear-gradient(180deg, #EA6113, #FBB931) 1;
+  letter-spacing: -0.2px;
 }
 
-/* CARD INFO */
-.view-card {
-  background: linear-gradient(135deg, #fff7ed, #ffffff);
-  padding: 18px;
+/* ─── Info grid ──────────────────────────────────────────── */
+.view-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+/* ─── Info item ──────────────────────────────────────────── */
+.view-item {
+  background: #fdf8f3;
+  border: 1px solid #f0ddd0;
   border-radius: 12px;
-  border: 1px solid #ffe0c2;
-  margin-bottom: 20px;
-  transition: 0.2s;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: box-shadow .18s, transform .18s;
 }
 
-.view-card:hover {
+.view-item:hover {
+  box-shadow: 0 4px 14px rgba(234,97,19,.10);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(255, 122, 24, 0.08);
 }
 
-.view-card p {
-  margin: 8px 0;
+.view-item-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: #a0826d;
+}
+
+.view-item-value {
   font-size: 14px;
-  color: #374151;
-}
-
-/* LABEL BOLD STYLE */
-.view-card b {
-  color: #111827;
-}
-
-/* DOCUMENTS TITLE */
-.view-docs h4 {
-  margin-bottom: 10px;
-  font-size: 15px;
-  color: #1f2937;
-}
-
-/* DOC ITEM */
-.view-doc-item {
-  background: #fff3e6;
-  color: #c2410c;
-  padding: 6px 10px;
-  margin-bottom: 6px;
-  border-radius: 8px;
-  font-size: 12px;
-  list-style: none;
-  border: 1px solid #ffd7b3;
-  transition: 0.2s;
-}
-
-.view-doc-item:hover {
-  background: #ffe4cc;
-}
-
-/* BACK BUTTON */
-.view-btn-back {
-  margin-top: 20px;
-  padding: 10px 16px;
-  border: none;
-  background: #ff7a18;
-  color: white;
-  border-radius: 10px;
-  cursor: pointer;
   font-weight: 600;
-  transition: 0.2s;
-  box-shadow: 0 4px 10px rgba(255, 122, 24, 0.2);
+  color: #1a1a2e;
 }
 
-.view-btn-back:hover {
-  background: #e86a10;
-  transform: translateY(-1px);
+/* ─── Status badge ───────────────────────────────────────── */
+.view-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 12px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  width: fit-content;
 }
+
+.status-attente  { background: #fff4d6; color: #92620a; }
+.status-accepter { background: #dcfce7; color: #15803d; }
+.status-refuser  { background: #fee2e2; color: #b91c1c; }
+
+/* ─── Documents section ──────────────────────────────────── */
+.view-docs {
+  background: #fdf8f3;
+  border: 1.5px dashed #f0ddd0;
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 24px;
+}
+
+.view-docs-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #EA6113;
+  margin: 0 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.view-docs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.view-doc-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff4e6;
+  color: #EA6113;
+  padding: 8px 12px;
+  border-radius: 9px;
+  font-size: 12.5px;
+  font-weight: 500;
+  border: 1px solid #ffd7b3;
+  transition: background .15s;
+}
+
+.view-doc-item:hover { background: #ffe4cc; }
+
+.view-doc-item::before { content: "📎"; font-size: 13px; }
+
+.view-no-doc {
+  color: #c4a882;
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* ─── Back button ────────────────────────────────────────── */
+.view-btn-back {
+  padding: 11px 24px;
+  border: none !important;
+  background: linear-gradient(135deg, #EA6113, #F88F22) !important;
+  color: #fff !important;
+  border-radius: 11px;
+  cursor: pointer;
+  font-size: 13.5px;
+  font-weight: 600;
+  font-family: inherit;
+  transition: opacity .18s, transform .15s;
+  box-shadow: 0 3px 12px rgba(248,143,34,0.30);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.view-btn-back:hover { opacity: .9; transform: translateY(-1px); }

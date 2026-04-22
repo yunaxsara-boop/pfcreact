@@ -28,15 +28,15 @@ export default function Dashboard() {
           title="Croissance des brevets"
           labels={["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"]}
           datasets={[
-            { label: "Brevets",  data: [30,45,28,60,52,38,48], backgroundColor: "#ede7f6", borderRadius: 6 },
-            { label: "Recours",  data: [20,35,18,45,40,28,35], backgroundColor: "#7c3aed", borderRadius: 6 },
+            { label: "Brevets",  data: [30,45,28,60,52,38,48], borderRadius: 6 },
+            { label: "Recours",  data: [20,35,18,45,40,28,35], borderRadius: 6 },
           ]}
         />
         <DonutChartCard
           title="Statut des recours"
           labels={["EN_COURS", "TRAITE", "REFUSE"]}
           data={[40, 47, 13]}
-          colors={["#7c3aed", "#2196f3", "#ef5350"]}
+          colors={["#FBB931", "#22c55e", "#EA6113"]}
         />
       </div>
 

@@ -36,7 +36,7 @@ import RespDocuments  from "./pages/responsable/Documents";
 /* ── DIRECTEUR ── */
 import DirDashboard from "./pages/directeur/Dashboard";
 import DirBrevets   from "./pages/directeur/Brevets";
-import DirDemandes  from "./pages/directeur/Demandes";
+
 import DirPaiements from "./pages/directeur/Paiements";
 import DirDocuments from "./pages/directeur/Documents";
 import DirRecours   from "./pages/directeur/Recours";
@@ -99,10 +99,7 @@ export default function App() {
       {/* ── DIRECTEUR ── */}
       <Route path="/directeur"                  element={<ProtectedRoute roles={["directeur"]}><Layout><DirDashboard /></Layout></ProtectedRoute>} />
       <Route path="/directeur/brevets"          element={<ProtectedRoute roles={["directeur"]}><Layout><DirBrevets /></Layout></ProtectedRoute>} />
-      <Route path="/directeur/brevets/add"      element={<ProtectedRoute roles={["directeur"]}><Layout><AddBrevet /></Layout></ProtectedRoute>} />
-      <Route path="/directeur/brevets/edit/:id" element={<ProtectedRoute roles={["directeur"]}><Layout><EditBrevet /></Layout></ProtectedRoute>} />
-      <Route path="/directeur/brevets/view/:id" element={<ProtectedRoute roles={["directeur"]}><Layout><ViewBrevet /></Layout></ProtectedRoute>} />
-      <Route path="/directeur/demandes"         element={<ProtectedRoute roles={["directeur"]}><Layout><DirDemandes /></Layout></ProtectedRoute>} />
+      
       <Route path="/directeur/paiements"        element={<ProtectedRoute roles={["directeur"]}><Layout><DirPaiements /></Layout></ProtectedRoute>} />
       <Route path="/directeur/documents"        element={<ProtectedRoute roles={["directeur"]}><Layout><DirDocuments /></Layout></ProtectedRoute>} />
       <Route path="/directeur/recours"          element={<ProtectedRoute roles={["directeur"]}><Layout><DirRecours /></Layout></ProtectedRoute>} />
