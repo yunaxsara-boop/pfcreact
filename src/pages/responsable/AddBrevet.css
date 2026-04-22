@@ -1,0 +1,127 @@
+/* 🔵 INAPI STYLE - ADD BREVET */
+.form-container {
+  max-width: 1100px;
+  margin: 30px auto;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  font-family: "Segoe UI", sans-serif;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e6e9ef;
+}
+
+/* TITLE */
+.form-container h2 {
+  text-align: left;
+  margin-bottom: 25px;
+  font-size: 20px;
+  color: #1f2a37;
+  font-weight: 600;
+  border-left: 4px solid #1d4ed8;
+  padding-left: 10px;
+}
+
+/* GRID */
+.form-container .form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+/* FORM GROUP */
+.form-container .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* FULL WIDTH */
+.form-container .full-width {
+  grid-column: span 2;
+}
+
+/* LABEL */
+.form-container label {
+  font-size: 12px;
+  margin-bottom: 6px;
+  color: #374151;
+  font-weight: 500;
+}
+
+/* INPUT + SELECT */
+.form-container input,
+.form-container select {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  background: #f9fafb;
+  transition: 0.2s;
+}
+
+/* FOCUS */
+.form-container input:focus,
+.form-container select:focus {
+  border-color: #1d4ed8;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.15);
+  outline: none;
+}
+
+/* DOCUMENT BOX */
+.form-container .docs-box {
+  border: 1px dashed #cbd5e1;
+  padding: 15px;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+/* DOC ITEM */
+.form-container .doc-item {
+  margin-top: 6px;
+  font-size: 12px;
+  background: #eef2ff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: #1e3a8a;
+}
+
+/* ACTIONS */
+.form-container .form-actions {
+  margin-top: 30px;
+  display: flex;
+  gap: 15px;
+}
+
+/* SAVE BUTTON (PRIMARY BLUE INAPI STYLE) */
+.form-container .btn-save {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #1d4ed8;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.form-container .btn-save:hover {
+  background: #1e40af;
+}
+
+/* CANCEL BUTTON */
+.form-container .btn-cancel {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+  color: #374151;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.form-container .btn-cancel:hover {
+  background: #f3f4f6;
+}
+
