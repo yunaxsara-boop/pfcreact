@@ -1,3 +1,4 @@
+/* FICHIERS MULTIPLES */
 .fichiers-section {
   display: flex;
   flex-direction: column;
@@ -209,4 +210,147 @@
 .no-file {
   font-size: 12px;
   color: #aaa;
+}
+.view-doc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.view-doc-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: #fdf8f3;
+  border: 1.5px solid #f0ddd0;
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.view-doc-item.full {
+  grid-column: span 2;
+}
+
+.view-doc-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: #a0826d;
+}
+
+.view-doc-value {
+  font-size: 14px;
+  color: #2d2013;
+  font-weight: 500;
+}
+/* ─── File select button ─────────────────────────────────── */
+.file-select-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1.5px dashed #f0ddd0;
+  background: #fdf8f3;
+  color: #a0826d;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+
+.file-select-btn:hover {
+  border-color: #F88F22;
+  background: #fff4e6;
+  color: #EA6113;
+}
+
+/* ─── File selected row ──────────────────────────────────── */
+.file-selected-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff4e6;
+  border: 1px solid #ffd7b3;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.file-selected-name {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 500;
+  color: #EA6113;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+}
+
+.file-change-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #F88F22;
+  cursor: pointer;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid #ffd7b3;
+  background: #fff;
+  transition: background .15s;
+  white-space: nowrap;
+}
+
+.file-change-btn:hover { background: #fdf8f3; }
+
+.file-remove-btn {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #c0392b;
+  padding: 2px;
+  border-radius: 4px;
+  transition: background .15s;
+}
+
+.file-remove-btn:hover { background: #fce4ec; }
+
+/* ─── View file row (modal) ──────────────────────────────── */
+.view-file-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.view-file-name {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+  color: #EA6113;
+}
+
+.view-dl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1.5px solid #f0ddd0;
+  background: #fdf8f3;
+  color: #EA6113;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+
+.view-dl-btn:hover {
+  background: #fff4e6;
+  border-color: #F88F22;
 }

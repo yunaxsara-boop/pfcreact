@@ -1,210 +1,124 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import AttachFileIcon from "@mui/icons-material/AttachFile";
+import ChangeCircleOutlinedIcon from "@mui/icons-material/ChangeCircleOutlined";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import "./documents.css";
 
 const TYPES_DOCUMENT = [
-  "Mémoire descriptif",
-  "Reçu paiement",
-  "Demande brevet",
-  "Recours",
-  "Rapport d'examen",
-  "Certificat",
-  "Autre",
+  "Mémoire descriptif", "Reçu paiement", "Demande brevet",
+  "Recours", "Rapport d'examen", "Certificat", "Autre",
 ];
 
-const CATEGORIES = ["brevet", "paiement", "demande", "recours"];
-
 const BREVETS = [
-  "Brevet FR-2024-001",
-  "Brevet FR-2024-002",
-  "Brevet FR-2024-003",
+  "Brevet FR-2024-001", "Brevet FR-2024-002", "Brevet FR-2024-003",
 ];
 
 export default function DocumentForm({ onSubmit, editData, onCancel, brevetPreselect }) {
-  const emptyDoc = () => ({
-    uid: Date.now() + Math.random(),
-    nom_document: "",
-    type_document: "",
-    categorie: "",
-    description: "",
-    fichier: "",
-    date_ajout: "",
-  });
+  const fileRef = useRef();
 
-  const [brevet_lie, setBrevet] = useState("");
-  const [documents, setDocuments] = useState([emptyDoc()]);
+  const [form, setForm] = useState({
+    brevet_lie: "", nom_document: "", type_document: "",
+    description: "", date_ajout: "", fichier: null,
+  });
 
   useEffect(() => {
     if (editData) {
-      setBrevet(editData.brevet_lie);
-      setDocuments([
-        {
-          uid: editData.id,
-          nom_document: editData.nom_document,
-          type_document: editData.type_document,
-          categorie: editData.categorie,
-          description: editData.description,
-          fichier: editData.fichier,
-          date_ajout: editData.date_ajout,
-        },
-      ]);
+      setForm({
+        brevet_lie:    editData.brevet_lie    || "",
+        nom_document:  editData.nom_document  || "",
+        type_document: editData.type_document || "",
+        description:   editData.description   || "",
+        date_ajout:    editData.date_ajout    || "",
+        fichier:       editData.fichier       || null,
+      });
     } else {
-      setBrevet(brevetPreselect || "");
-      setDocuments([emptyDoc()]);
+      setForm({ brevet_lie: brevetPreselect || "", nom_document: "", type_document: "", description: "", date_ajout: "", fichier: null });
     }
   }, [editData, brevetPreselect]);
 
-  const handleDocChange = (uid, field, value) => {
-    setDocuments((prev) =>
-      prev.map((d) => (d.uid === uid ? { ...d, [field]: value } : d))
-    );
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleFile = (e) => {
+    const file = e.target.files[0];
+    if (file) setForm({ ...form, fichier: file });
   };
 
-  const addDocument = () => {
-    setDocuments((prev) => [...prev, emptyDoc()]);
-  };
-
-  const removeDocument = (uid) => {
-    if (documents.length === 1) return;
-    setDocuments((prev) => prev.filter((d) => d.uid !== uid));
+  const handleRemoveFile = () => {
+    setForm({ ...form, fichier: null });
+    if (fileRef.current) fileRef.current.value = "";
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!brevet_lie) return;
-
-    documents.forEach((doc, index) => {
-      onSubmit({
-        id: editData && index === 0 ? editData.id : Date.now() + index,
-        brevet_lie,
-        nom_document: doc.nom_document,
-        type_document: doc.type_document,
-        categorie: doc.categorie,
-        description: doc.description,
-        fichier: doc.fichier,
-        date_ajout: doc.date_ajout,
-      });
-    });
-
+    onSubmit({ id: editData ? editData.id : Date.now(), ...form });
     if (!editData) {
-      setBrevet("");
-      setDocuments([emptyDoc()]);
+      setForm({ brevet_lie: "", nom_document: "", type_document: "", description: "", date_ajout: "", fichier: null });
+      if (fileRef.current) fileRef.current.value = "";
     }
   };
 
   const handleCancel = () => {
-    setBrevet("");
-    setDocuments([emptyDoc()]);
+    setForm({ brevet_lie: "", nom_document: "", type_document: "", description: "", date_ajout: "", fichier: null });
     if (onCancel) onCancel();
   };
 
+  const fileName = form.fichier instanceof File
+    ? form.fichier.name
+    : typeof form.fichier === "string" && form.fichier !== ""
+    ? form.fichier
+    : null;
+
   return (
     <form className="user-form" onSubmit={handleSubmit}>
-      <h3>{editData ? "Modifier document" : "Ajouter documents"}</h3>
+      <h3>{editData ? "Modifier document" : "Ajouter document"}</h3>
 
       <label className="field-label">Brevet lié</label>
-      <select
-        value={brevet_lie}
-        onChange={(e) => setBrevet(e.target.value)}
-        required
-        disabled={!!editData}
-      >
+      <select name="brevet_lie" value={form.brevet_lie} onChange={handleChange} required disabled={!!editData}>
         <option value="">Sélectionner un brevet</option>
-        {BREVETS.map((b) => (
-          <option key={b} value={b}>{b}</option>
-        ))}
+        {BREVETS.map((b) => <option key={b} value={b}>{b}</option>)}
       </select>
 
-      <div className="docs-list">
-        {documents.map((doc, index) => (
-          <div key={doc.uid} className="doc-card">
+      <label className="field-label">Nom document</label>
+      <input name="nom_document" value={form.nom_document} onChange={handleChange} placeholder="Nom du document" required />
 
-            <div className="doc-card-header">
-              <span className="doc-card-title">Document {index + 1}</span>
-              {documents.length > 1 && (
-                <button
-                  type="button"
-                  className="fichier-remove"
-                  onClick={() => removeDocument(doc.uid)}
-                >
-                  ✕ Supprimer
-                </button>
-              )}
-            </div>
+      <label className="field-label">Type de document</label>
+      <select name="type_document" value={form.type_document} onChange={handleChange} required>
+        <option value="">Sélectionner un type</option>
+        {TYPES_DOCUMENT.map((t) => <option key={t} value={t}>{t}</option>)}
+      </select>
 
-            <input
-              placeholder="Nom du document"
-              value={doc.nom_document}
-              onChange={(e) => handleDocChange(doc.uid, "nom_document", e.target.value)}
-              required
-            />
+      <label className="field-label">Description</label>
+      <textarea name="description" value={form.description} onChange={handleChange} placeholder="Description du document" rows="3" />
 
-            <select
-              value={doc.type_document}
-              onChange={(e) => handleDocChange(doc.uid, "type_document", e.target.value)}
-              required
-            >
-              <option value="">Type de document</option>
-              {TYPES_DOCUMENT.map((t) => (
-                <option key={t} value={t}>{t}</option>
-              ))}
-            </select>
+      <label className="field-label">Date ajout</label>
+      <input type="date" name="date_ajout" value={form.date_ajout} onChange={handleChange} required />
 
-            <select
-              value={doc.categorie}
-              onChange={(e) => handleDocChange(doc.uid, "categorie", e.target.value)}
-              required
-            >
-              <option value="">Catégorie</option>
-              {CATEGORIES.map((c) => (
-                <option key={c} value={c}>{c}</option>
-              ))}
-            </select>
+      <label className="field-label">Fichier</label>
+      <input ref={fileRef} type="file" id="file-upload" style={{ display: "none" }} onChange={handleFile} />
 
-            <textarea
-              placeholder="Description"
-              value={doc.description}
-              onChange={(e) => handleDocChange(doc.uid, "description", e.target.value)}
-              rows="2"
-            />
-
-            <input
-              type="date"
-              value={doc.date_ajout}
-              onChange={(e) => handleDocChange(doc.uid, "date_ajout", e.target.value)}
-              required
-            />
-
-            <input
-              type="file"
-              onChange={(e) =>
-                handleDocChange(doc.uid, "fichier", e.target.files[0] || "")
-              }
-            />
-
-            {doc.fichier && (
-              <span className="fichier-name">
-                📎 {doc.fichier instanceof File ? doc.fichier.name : doc.fichier}
-              </span>
-            )}
-
-          </div>
-        ))}
-      </div>
-
-      {!editData && (
-        <button type="button" className="fichier-add" onClick={addDocument}>
-          + Ajouter un autre document
-        </button>
+      {!fileName ? (
+        <label htmlFor="file-upload" className="file-select-btn">
+          <AttachFileIcon style={{ fontSize: 16 }} />
+          Sélectionner un fichier
+        </label>
+      ) : (
+        <div className="file-selected-row">
+          <AttachFileIcon style={{ fontSize: 15, color: "#EA6113" }} />
+          <span className="file-selected-name">{fileName}</span>
+          <label htmlFor="file-upload" className="file-change-btn" title="Changer le fichier">
+            <ChangeCircleOutlinedIcon style={{ fontSize: 16 }} />
+            Changer
+          </label>
+          <button type="button" className="file-remove-btn" onClick={handleRemoveFile} title="Supprimer le fichier">
+            <DeleteOutlineIcon style={{ fontSize: 16 }} />
+          </button>
+        </div>
       )}
 
-      <button type="submit">
-        {editData ? "Modifier" : `Ajouter ${documents.length > 1 ? `(${documents.length} documents)` : ""}`}
-      </button>
+      <button type="submit">{editData ? "Enregistrer" : "Ajouter"}</button>
 
       {editData && (
-        <button type="button" className="cancel-btn" onClick={handleCancel}>
-          Annuler
-        </button>
+        <button type="button" className="cancel-btn" onClick={handleCancel}>Annuler</button>
       )}
     </form>
   );
