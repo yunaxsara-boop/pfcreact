@@ -25,7 +25,7 @@
 .underline {
   width: 60px;
   height: 3px;
-  background: #ff7a00;
+  background: #F88F22;
   margin: 10px auto;
   border-radius: 10px;
 }
@@ -47,8 +47,8 @@
 
 /* focus effet orange */
 .login-inputs .input:focus-within {
-  border-color: #ff7a00;
-  box-shadow: 0 0 0 2px rgba(255, 122, 0, 0.15);
+  border-color: #F88F22;
+  box-shadow: 0 0 0 2px rgba(248, 143, 34, 0.15);
 }
 
 /* ICON */
@@ -73,7 +73,7 @@
 .submit-btn {
   width: 100%;
   padding: 12px;
-  background: linear-gradient(180deg, #ff7a00, #ff9a3d);
+  background: linear-gradient(180deg, #EA6113, #F88F22, #FBB931);
   border: none;
   border-radius: 10px;
 

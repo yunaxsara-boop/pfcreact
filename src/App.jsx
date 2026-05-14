@@ -4,9 +4,16 @@ import { useAuth } from "./contexts/AuthContext";
 import { RespBrevetsProvider } from "./pages/responsable/RespBrevetsContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
 
-import Layout from "./components/Layout";
+import Layout         from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Login from "./pages/Login";
+
+/* ── Pages publiques ── */
+import Home         from "./pages/Home";
+import Procedure    from "./pages/public/Procedure";
+import Presentation from "./pages/public/Presentation";
+import Dossier      from "./pages/public/Dossier";
+import Tarifs       from "./pages/public/Tarifs";
+import Login        from "./pages/Login";
 
 /* ── ADMIN ── */
 import AdminDashboard from "./pages/admin/Dashboard";
@@ -48,10 +55,18 @@ const ROLE_HOME = {
   directeur:   "/directeur",
 };
 
-function HomeRedirect() {
+/** Si connecté → dashboard, sinon → Login */
+function LoginRoute() {
   const { user } = useAuth();
-  if (!user) return <Navigate to="/login" replace />;
-  return <Navigate to={ROLE_HOME[user.role] || "/login"} replace />;
+  if (user) return <Navigate to={ROLE_HOME[user.role] || "/"} replace />;
+  return <Login />;
+}
+
+/** Si connecté → dashboard, sinon → Home publique */
+function HomeRoute() {
+  const { user } = useAuth();
+  if (user) return <Navigate to={ROLE_HOME[user.role] || "/login"} replace />;
+  return <Home />;
 }
 
 const RespBrevetRoute = ({ element }) => (
@@ -67,15 +82,19 @@ export default function App() {
     <NotificationProvider>
       <Routes>
 
-        {/* PUBLIC */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/"      element={<HomeRedirect />} />
+        {/* ══ PAGES PUBLIQUES ══ */}
+        <Route path="/"              element={<HomeRoute />} />
+        <Route path="/login"         element={<LoginRoute />} />
+        <Route path="/procedure"     element={<Procedure />} />
+        <Route path="/presentation"  element={<Presentation />} />
+        <Route path="/dossier"       element={<Dossier />} />
+        <Route path="/tarifs"        element={<Tarifs />} />
 
-        {/* ── ADMIN ── */}
+        {/* ══ ADMIN ══ */}
         <Route path="/admin"       element={<ProtectedRoute roles={["admin"]}><Layout><AdminDashboard /></Layout></ProtectedRoute>} />
         <Route path="/admin/users" element={<ProtectedRoute roles={["admin"]}><Layout><AdminUsers /></Layout></ProtectedRoute>} />
 
-        {/* ── AGENT ── */}
+        {/* ══ AGENT ══ */}
         <Route path="/agent"                  element={<ProtectedRoute roles={["agent"]}><Layout><AgentDashboard /></Layout></ProtectedRoute>} />
         <Route path="/agent/brevets"          element={<ProtectedRoute roles={["agent"]}><Layout><AgentBrevets /></Layout></ProtectedRoute>} />
         <Route path="/agent/brevets/add"      element={<ProtectedRoute roles={["agent"]}><Layout><AddBrevet /></Layout></ProtectedRoute>} />
@@ -86,7 +105,7 @@ export default function App() {
         <Route path="/agent/recours"          element={<ProtectedRoute roles={["agent"]}><Layout><AgentRecours /></Layout></ProtectedRoute>} />
         <Route path="/agent/documents"        element={<ProtectedRoute roles={["agent"]}><Layout><AgentDocuments /></Layout></ProtectedRoute>} />
 
-        {/* ── RESPONSABLE ── */}
+        {/* ══ RESPONSABLE ══ */}
         <Route path="/responsable"           element={<ProtectedRoute roles={["responsable"]}><Layout><RespDashboard /></Layout></ProtectedRoute>} />
         <Route path="/responsable/demandes"  element={<ProtectedRoute roles={["responsable"]}><Layout><RespDemandes /></Layout></ProtectedRoute>} />
         <Route path="/responsable/paiements" element={<ProtectedRoute roles={["responsable"]}><Layout><RespPaiements /></Layout></ProtectedRoute>} />
@@ -97,14 +116,14 @@ export default function App() {
         <Route path="/responsable/brevets/edit/:id" element={<RespBrevetRoute element={<RespEditBrevet />} />} />
         <Route path="/responsable/brevets/view/:id" element={<RespBrevetRoute element={<RespViewBrevet />} />} />
 
-        {/* ── DIRECTEUR ── */}
+        {/* ══ DIRECTEUR ══ */}
         <Route path="/directeur"           element={<ProtectedRoute roles={["directeur"]}><Layout><DirDashboard /></Layout></ProtectedRoute>} />
         <Route path="/directeur/brevets"   element={<ProtectedRoute roles={["directeur"]}><Layout><DirBrevets /></Layout></ProtectedRoute>} />
         <Route path="/directeur/paiements" element={<ProtectedRoute roles={["directeur"]}><Layout><DirPaiements /></Layout></ProtectedRoute>} />
         <Route path="/directeur/documents" element={<ProtectedRoute roles={["directeur"]}><Layout><DirDocuments /></Layout></ProtectedRoute>} />
         <Route path="/directeur/recours"   element={<ProtectedRoute roles={["directeur"]}><Layout><DirRecours /></Layout></ProtectedRoute>} />
 
-        {/* ERRORS */}
+        {/* ══ ERREURS ══ */}
         <Route path="/unauthorized" element={<div style={{ padding: 40 }}>Accès refusé</div>} />
         <Route path="*"             element={<Navigate to="/" replace />} />
 
